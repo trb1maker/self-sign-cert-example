@@ -14,7 +14,15 @@ tasks:
   build:
     cmds:
       - go build -o bin/generator ./cmd/generator/./...
+      - go build -o bin/server ./cmd/server/./...
+      - go build -o bin/client ./cmd/client/./...
     silent: true
   generate:
     cmds:
       - ./bin/generator --out=./certs
+    silent: true
+  run:
+    cmds:
+      - ./bin/server --cert=./certs/pravo.tech.pem --key=./certs/pravo.tech.key --wait=5 &
+      - ./bin/client --cert=./certs/pravo.tech.pem --wait=5
+    silent: true
