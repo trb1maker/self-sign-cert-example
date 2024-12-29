@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package api;
+
+option go_package = "self-sign-cert-example/internal/api";
+
+message Request {}
+
+message Response {
+    string message = 1;
+}
+
+service Service {
+    rpc Hello(Request) returns (Response);
+}
