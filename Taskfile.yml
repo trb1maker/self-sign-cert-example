@@ -14,15 +14,26 @@ tasks:
   build:
     cmds:
       - go build -o bin/generator ./cmd/generator/./...
-      - go build -o bin/server ./cmd/server/./...
-      - go build -o bin/client ./cmd/client/./...
+      - go build -o bin/http-server ./cmd/http/server/./...
+      - go build -o bin/http-client ./cmd/http/client/./...
+      - go build -o bin/grpc-server ./cmd/grpc/server/./...
+      - go build -o bin/grpc-client ./cmd/grpc/client/./...
     silent: true
   generate:
     cmds:
       - ./bin/generator --out=./certs
     silent: true
-  run:
+  http:
     cmds:
-      - ./bin/server --cert=./certs/pravo.tech.pem --key=./certs/pravo.tech.key --wait=5 &
-      - ./bin/client --cert=./certs/pravo.tech.pem --wait=5
+      - ./bin/http-server --cert=./certs/pravo.tech.pem --key=./certs/pravo.tech.key --wait=5 &
+      - ./bin/http-client --cert=./certs/pravo.tech.pem --wait=5
+    silent: true
+  grpc:
+    cmds:
+      - ./bin/grpc-server --cert=./certs/pravo.tech.pem --key=./certs/pravo.tech.key --wait=10 &
+      - ./bin/grpc-client --cert=./certs/pravo.tech.pem --wait=5
+    silent: true
+  api-generate:
+    cmds:
+      - go generate ./internal/api/./...
     silent: true
